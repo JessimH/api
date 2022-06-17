@@ -20,14 +20,14 @@ return new class extends Migration
             $table->string('password');
             $table->string('profile_picture')->nullable();
             $table->integer('note')->nullable();
-            $table->string('sports');
+            $table->json('sports');
             $table->integer('followers')->nullable();
             $table->integer('following')->nullable();
             $table->string('comments')->nullable();
             $table->integer('sessions')->nullable();
             $table->integer('messages')->nullable();
             $table->string('subsciptions')->nullable();
-            $table->boolean('is_pro');
+            $table->boolean('is_pro')->default(0);
             $table->integer('balance')->nullable();
             $table->string('subscribers')->nullable();
             $table->timestamp('email_verified_at')->nullable();

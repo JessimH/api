@@ -18,8 +18,6 @@ return new class extends Migration
             $table->integer('user_Id');
             $table->string('body');
             $table->integer('post_Id');
-            $table->string('medias');
-            $table->boolean('isSessionComment');
             $table->timestamps();
         });
     }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('sport_id');
             $table->integer('creator_id');
             $table->string('coordonate');
-            $table->string('users');
+            $table->string('users')->nullable();
             $table->string('duration');
             $table->timestamps();
         });

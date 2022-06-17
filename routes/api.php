@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ApiTokenController;
+use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('auth/register', [ApiTokenController::class, 'register']);
+
+Route::post('auth/login', [ApiTokenController::class, 'login']);
+
+Route::middleware('auth:sanctum')->post('posts', [PostController::class, 'create']);
+
+Route::get('posts', [PostController::class, 'showAllPosts']);
+
+Route::get('posts/{id}', [PostController::class, 'showPost']);
+
+

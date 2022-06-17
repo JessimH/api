@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('body');
-            $table->string('medias');
-            $table->string('likes');
-            $table->string('isPremium');
+            $table->string('description')->nullable();
+            $table->string('medias')->nullable();
+            $table->integer('session_id')->nullable();
+            $table->string('likes')->nullable();
+            $table->integer('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('isPremium')->default(0);
             $table->timestamps();
         });
     }
