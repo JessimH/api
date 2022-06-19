@@ -22,8 +22,7 @@ Route::post('auth/login', [ApiTokenController::class, 'login']);
 
 Route::middleware('auth:sanctum')->post('posts', [PostController::class, 'create']);
 
-Route::get('posts', [PostController::class, 'showAllPosts']);
+Route::middleware('auth:sanctum')->get('posts', [PostController::class, 'showFollowingPosts']);
 
-Route::get('posts/{id}', [PostController::class, 'showPost']);
 
 

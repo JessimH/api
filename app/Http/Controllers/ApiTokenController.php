@@ -33,7 +33,8 @@ class ApiTokenController extends Controller
             'email' => $request->email,
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            'sports' => json_encode($request->sports)
+            'sports' => json_encode($request->sports),
+            'following'=> json_encode($request->following),
         ]);
 
         $token = $user->createToken($request->email)->plainTextToken;

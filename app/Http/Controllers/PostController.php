@@ -54,17 +54,25 @@ class PostController extends Controller
         ], 200);
     }
 
-    public function showPost(Request $request, $id)
+    public function showFollowingPosts(Request $request)
     {
 
-        $post = DB::table('posts as p')->join('users as u', 'u.id', '=','p.user_id' )->select('p.*')->get();
+        $user = DB::table('users')->select('following')->where('id', request()->user()->id )->get();
+
+        foreach (json_decode($user[0]->following)->list as $followingID){
+            $posts= DB::table('posts')->where('user_id', $followingID)->get();
+            foreach ($posts as $post){
+                $followingPosts[] = $post;
+
+            }
+        }
 
         if(is_null($post)){
             return response()->json([
-                'errors' => "L'article n'existe pas."
+                'errors' => "Aucun de vos abonnement n'a de post."
             ], 404);
         }
 
-        return $post[0]->id;
+        return $followingPosts;
     }
 }
