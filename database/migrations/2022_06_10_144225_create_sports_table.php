@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('profile_pic');
-            $table->string('users');
+            $table->json('users');
             $table->timestamps();
         });
     }
