@@ -108,4 +108,13 @@ return [
 
     'password_timeout' => 10800,
 
+    'api' => [
+        'driver' => 'token',
+        'provider' => 'users',
+    ],
+    'admin' => [
+        'driver' => 'session',
+        'provider' => 'users',
+    ],
+
 ];
