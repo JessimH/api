@@ -36,6 +36,11 @@ return [
     */
 
     'guards' => [
+        'sanctum' => [
+            'driver' => 'token',
+            'provider' => 'users',
+            'hash' => true,
+        ],
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
@@ -45,6 +50,7 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
 
     ],
 
