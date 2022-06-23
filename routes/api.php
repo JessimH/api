@@ -1,5 +1,7 @@
 <?php
 
+
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\ExplorerController;
 use App\Http\Controllers\MapController;
@@ -7,7 +9,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+
 
 // AUTH
 Route::post('auth/register', [ApiTokenController::class, 'register']);
