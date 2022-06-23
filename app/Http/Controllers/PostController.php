@@ -75,4 +75,91 @@ class PostController extends Controller
 
         return $followingPosts;
     }
+
+    public function updatePost(Request $request, $id)
+    {
+
+        $post = DB::table('posts')->where('id', $id)->first();
+
+        if ($post->user_id !== $request->user()->id){
+            return response()->json([
+                'errors' => "Vous n'avez pas l'autorisation de modifier les postes des autres"
+            ]);
+        }
+
+
+        $updateValues = [
+            'medias' => $request->medias,
+            'session_id' => $request->session_id,
+            'description' => $request->description,
+        ];
+
+//        if($request->image){
+//
+//            $result = $request->image->storeOnCloudinary();
+//
+//            $updateValues += [
+//                'image' => $result->getSecurePath()
+//            ];
+//        }
+
+        if ($request->isPremium)
+            $updateValues += ['isPremium' => true];
+        else
+            $updateValues += ['isPremium' => false];
+
+
+        DB::table('posts')
+            ->where(['id' => $post->id])
+            ->update($updateValues);
+
+        $post = DB::table('posts')->where('id', $post->id)->first();
+
+        return $post;
+
+    }
+
+
+    public function deletePost(Request $request, $id)
+    {
+
+        $post = DB::table('posts')->where('id', $id)->first();
+
+        if ($post){
+            if ($post->user_id !== $request->user()->id){
+                return response()->json([
+                    'errors' => "Vous n'avez pas l'autorisation de modifier les postes des autres"
+                ]);
+
+
+            }
+
+            $check =  DB::table('posts')->where('id', $id)->delete();
+
+            if ($check){
+                return response()->json([
+                    "success" => "Le post a bien été supprimé"
+                ]);
+            }
+            else{
+                return response()->json([
+                    "errors" => "La suppression du post n'a pas pu être effectué"
+                ]);
+            }
+        }
+
+        else{
+            return response()->json([
+                'errors' => "Post introuvable"
+            ]);
+        }
+
+
+
+
+
+
+
+    }
+
 }

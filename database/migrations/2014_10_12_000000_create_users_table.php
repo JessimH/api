@@ -24,7 +24,6 @@ return new class extends Migration
             $table->json('followers')->nullable();
             $table->json('following')->nullable();
             $table->string('comments')->nullable();
-            $table->json('sessions')->nullable();
             $table->json('messages')->nullable();
             $table->json('subscriptions')->nullable();
             $table->boolean('is_pro')->default(0);
