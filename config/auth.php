@@ -45,7 +45,7 @@ return [
             'provider' => 'users',
         ],
         'sanctum' => [
-            'driver' => 'session',
+            'driver' => 'token',
             'provider' => 'users',
         ],
     ],
