@@ -40,7 +40,7 @@ class ApiTokenController extends Controller
 
         $token = $user->createToken($request->email)->plainTextToken;
 
-        $addToken = DB::table('user')->where('email', $request->email)->update(['api_token' => $token]);
+        DB::table('users')->where('email', $request->email)->update(['api_token' => $token]);
 
         return response()->json([
             'token' => $token
