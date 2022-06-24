@@ -20,7 +20,7 @@ class SessionController extends Controller
             'sport_id' => $request->sport_id,
             'creator_id' => $request->user()->id,
             'duration' =>$request->duration,
-            'coordonate' =>json_encode($request->coordonate)
+            'coordinate' =>json_encode($request->coordinate)
         ]);
 
         //STATUS 201
@@ -31,7 +31,7 @@ class SessionController extends Controller
             'sport_id' => $session->sport_id,
             'duration' => $session->duration,
             'creator_id' => $session->creator_id,
-            'coordonate' =>json_decode($session->coordonate),
+            'coordinate' =>json_decode($session->coordinate),
             'user' => [
                 'id' => $request->user()->id,
                 'created_at' => $request->user()->created_at,

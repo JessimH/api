@@ -19,7 +19,7 @@ class ApiTokenController extends Controller
             'email' => 'required|email',
             'username' => 'required',
             'password' => 'required',
-            'sports' => 'required'
+            'sports' => 'required',
         ]);
 
         $checkUsername = User::where('username', $request->usename)->exists();
@@ -35,6 +35,7 @@ class ApiTokenController extends Controller
             'username' => $request->username,
             'password' => Hash::make($request->password),
             'sports' => json_encode($request->sports),
+            'is_pro' => $request->is_pro,
             'following'=> json_encode($request->following),
         ]);
 
@@ -43,7 +44,8 @@ class ApiTokenController extends Controller
         DB::table('users')->where('email', $request->email)->update(['api_token' => $token]);
 
         return response()->json([
-            'token' => $token
+            'token' => $token,
+            'user' => $user
         ], 201);
 
     }

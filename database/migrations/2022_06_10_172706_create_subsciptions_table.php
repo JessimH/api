@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('pro_id');
             $table->timestamps();
             $table->date('start_subscription');
-            $table->date('end_subsciption');
+            $table->date('end_subscription');
         });
     }
 
