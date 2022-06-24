@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\ExplorerController;
@@ -37,6 +38,10 @@ Route::middleware('auth:sanctum')->get('map', [MapController::class, 'showDistan
 Route::middleware('auth:sanctum')->post('sessions', [SessionController::class, 'create']);
 
 Route::middleware('auth:sanctum')->delete('sessions/{id}', [SessionController::class, 'deleteSession']);
+
+Route::middleware('auth:sanctum')->post('comment', [CommentController::class, 'create']);
+
+Route::middleware('auth:sanctum')->delete('comment/{id}', [CommentController::class, 'deleteComment']);
 
 
 

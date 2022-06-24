@@ -130,8 +130,6 @@ class PostController extends Controller
                 return response()->json([
                     'errors' => "Vous n'avez pas l'autorisation de modifier les postes des autres"
                 ]);
-
-
             }
 
             $check =  DB::table('posts')->where('id', $id)->delete();
@@ -153,13 +151,6 @@ class PostController extends Controller
                 'errors' => "Post introuvable"
             ]);
         }
-
-
-
-
-
-
-
     }
 
 }

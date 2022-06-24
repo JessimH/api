@@ -66,7 +66,8 @@ class ApiTokenController extends Controller
         $user->tokens()->where('tokenable_id', $user->id)->delete();
 
         $token = $user->createToken($request->username)->plainTextToken;
-        DB::table('users')->where('email', $request->email)->update(['api_token' => $token]);
+
+        DB::table('users')->where('username', $request->username)->update(['api_token' => $token]);
 
 
         return response()->json([
