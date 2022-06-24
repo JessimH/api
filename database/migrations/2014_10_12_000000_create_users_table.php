@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('comments')->nullable();
             $table->json('messages')->nullable();
             $table->json('subscriptions')->nullable();
-            $table->boolean('is_pro')->default(0);
+            $table->boolean('is_pro')->default(false);
             $table->integer('balance')->nullable();
             $table->json('subscribers')->nullable();
             $table->timestamp('email_verified_at')->nullable();
