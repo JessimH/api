@@ -30,6 +30,7 @@ return new class extends Migration
             $table->integer('balance')->nullable();
             $table->json('subscribers')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('api_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

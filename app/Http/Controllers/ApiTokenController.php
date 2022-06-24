@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ApiTokenController extends Controller
@@ -38,6 +39,8 @@ class ApiTokenController extends Controller
         ]);
 
         $token = $user->createToken($request->email)->plainTextToken;
+
+        $addToken = DB::table('user')->where('email', $request->email)->update(['api_token' => $token]);
 
         return response()->json([
             'token' => $token
