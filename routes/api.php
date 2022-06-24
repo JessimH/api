@@ -18,7 +18,7 @@ Route::post('auth/login', [ApiTokenController::class, 'login']);
 
 //POSTS
 
-Route::middleware('auth:api')->post('posts', [PostController::class, 'create']);
+Route::middleware('auth:sanctum')->post('posts', [PostController::class, 'create']);
 
 Route::middleware('auth:sanctum')->get('posts', [PostController::class, 'showFollowingPosts']);
 
