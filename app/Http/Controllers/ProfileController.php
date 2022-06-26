@@ -44,6 +44,7 @@ class ProfileController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'sports' => json_encode($request->sports),
             // Profile picture
         ];
 
