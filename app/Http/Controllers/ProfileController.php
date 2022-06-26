@@ -28,6 +28,43 @@ class ProfileController extends Controller
         return $profileContent;
     }
 
+    public function updateUser(Request $request, $id)
+    {
 
+        $user = DB::table('users')->where('id', $id)->first();
+
+        if ($user->id !== $request->user()->id){
+            return response()->json([
+                'errors' => "Vous n'avez pas l'autorisation de modifier le profile des autres"
+            ]);
+        }
+
+
+        $updateValues = [
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            // Profile picture
+        ];
+
+//        if($request->image){
+//
+//            $result = $request->image->storeOnCloudinary();
+//
+//            $updateValues += [
+//                'image' => $result->getSecurePath()
+//            ];
+//        }
+
+
+        DB::table('users')
+            ->where(['id' => $user->id])
+            ->update($updateValues);
+
+        $post = DB::table('users')->where('id', $user->id)->first();
+
+        return $post;
+
+    }
 
 }

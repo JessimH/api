@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
 
 // AUTH
 
-Route::get('auth/register', [SportController::class, 'getSports']);
 
 Route::post('auth/register', [ApiTokenController::class, 'register']);
 
@@ -46,6 +45,10 @@ Route::middleware('auth:sanctum')->delete('sessions/{id}', [SessionController::c
 Route::middleware('auth:sanctum')->post('comment', [CommentController::class, 'create']);
 
 Route::middleware('auth:sanctum')->delete('comment/{id}', [CommentController::class, 'deleteComment']);
+
+Route::get('sports', [SportController::class, 'getSports']);
+
+
 
 
 
