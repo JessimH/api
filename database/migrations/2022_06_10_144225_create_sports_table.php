@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('sports', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->json('users');
+            $table->json('users')->nullable();
             $table->timestamps();
         });
     }

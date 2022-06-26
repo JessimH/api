@@ -28,4 +28,6 @@ class ProfileController extends Controller
         return $profileContent;
     }
 
+
+
 }

@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\SportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\ExplorerController;
@@ -13,6 +14,9 @@ use Illuminate\Http\Request;
 
 
 // AUTH
+
+Route::get('auth/register', [SportController::class, 'getSports']);
+
 Route::post('auth/register', [ApiTokenController::class, 'register']);
 
 Route::post('auth/login', [ApiTokenController::class, 'login']);
