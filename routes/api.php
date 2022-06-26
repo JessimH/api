@@ -48,6 +48,8 @@ Route::middleware('auth:sanctum')->delete('comment/{id}', [CommentController::cl
 
 Route::get('sports', [SportController::class, 'getSports']);
 
+Route::middleware('auth:sanctum')->put('profile/{id}', [ProfileController::class, 'updateUser']);
+
 
 
 

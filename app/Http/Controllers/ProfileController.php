@@ -4,7 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use function PHPUnit\Framework\isEmpty;
+
+/**
+ * @OA\Info(title="My First API", version="0.1")
+ * @OA\Post(
+ *     path="/api/auth/register",
+ *     description="Register page",
+ *     @OA\Response(response="201", description="Welcome page")
+ * )
+ */
 
 class ProfileController extends Controller
 {
@@ -40,6 +50,7 @@ class ProfileController extends Controller
         }
 
 
+
         $updateValues = [
             'username' => $request->username,
             'email' => $request->email,
@@ -58,13 +69,15 @@ class ProfileController extends Controller
 //        }
 
 
+
+
         DB::table('users')
             ->where(['id' => $user->id])
             ->update($updateValues);
 
-        $post = DB::table('users')->where('id', $user->id)->first();
+        $user = DB::table('users')->where('id', $user->id)->first();
 
-        return $post;
+        return $user;
 
     }
 
