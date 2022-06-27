@@ -5,8 +5,8 @@
         "version": "0.1"
     },
     "paths": {
-        "/api/auth/register": {
-            "post": {
+        "/": {
+            "get": {
                 "description": "Home page",
                 "responses": {
                     "default": {

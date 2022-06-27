@@ -45,8 +45,11 @@ class ApiTokenController extends Controller
 
         return response()->json([
             'token' => $token,
-            'user' => $user
+            'username' => $user->username,
+            'email' => $user->email,
+            'created_at' => $user->created_at
         ], 201);
+
 
     }
 
@@ -72,7 +75,9 @@ class ApiTokenController extends Controller
 
         return response()->json([
             'token' => $token,
-            'user' =>$user
+            'username' =>$user->username,
+            'id'=> $user->id,
+            'profile_picture' => $user->profile_picture,
         ], 200);
     }
 }

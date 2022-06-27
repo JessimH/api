@@ -15,40 +15,56 @@ use Illuminate\Http\Request;
 
 // AUTH
 
-
 Route::post('auth/register', [ApiTokenController::class, 'register']);
 
 Route::post('auth/login', [ApiTokenController::class, 'login']);
 
 //POSTS
 
-Route::middleware('auth:sanctum')->post('posts', [PostController::class, 'create']);
+Route::middleware('auth:sanctum')->post('post', [PostController::class, 'create']);
 
 Route::middleware('auth:sanctum')->get('posts', [PostController::class, 'showFollowingPosts']);
 
-Route::middleware('auth:sanctum')->put('posts/{id}', [PostController::class, 'updatePost']);
+Route::middleware('auth:sanctum')->delete('post/{id}', [PostController::class, 'deletePost']);
 
-Route::middleware('auth:sanctum')->delete('posts/{id}', [PostController::class, 'deletePost']);
+// PROFILE
 
 Route::middleware('auth:sanctum')->get('profile/{id}', [ProfileController::class, 'showProfileContent']);
+
+Route::middleware('auth:sanctum')->put('updateprofile/{id}', [ProfileController::class, 'updateUser']);
+
+// EXPLORER
 
 Route::middleware('auth:sanctum')->get('explorer', [ExplorerController::class, 'showExplorerContent']);
 
 // Route explorer POST
 
+// MAP
+
 Route::middleware('auth:sanctum')->get('map', [MapController::class, 'showDistance']);
 
-Route::middleware('auth:sanctum')->post('sessions', [SessionController::class, 'create']);
+// SESSIONS
 
-Route::middleware('auth:sanctum')->delete('sessions/{id}', [SessionController::class, 'deleteSession']);
+Route::middleware('auth:sanctum')->post('session', [SessionController::class, 'create']);
+
+Route::middleware('auth:sanctum')->delete('session/{id}', [SessionController::class, 'deleteSession']);
+
+// COMMENTS
 
 Route::middleware('auth:sanctum')->post('comment', [CommentController::class, 'create']);
 
 Route::middleware('auth:sanctum')->delete('comment/{id}', [CommentController::class, 'deleteComment']);
 
+// SPORTS
+
 Route::get('sports', [SportController::class, 'getSports']);
 
-Route::middleware('auth:sanctum')->put('profile/{id}', [ProfileController::class, 'updateUser']);
+// LIKES
+
+Route::middleware('auth:sanctum')->post('like', [PostController::class, 'addLike']);
+
+Route::middleware('auth:sanctum')->post('follow', [ProfileController::class, 'addRmFollow']);
+
 
 
 

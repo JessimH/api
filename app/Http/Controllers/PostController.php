@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use function Symfony\Component\Mime\Header\get;
 
 class PostController extends Controller
 {
@@ -63,7 +64,6 @@ class PostController extends Controller
             $posts= DB::table('posts')->where('user_id', $followingID)->get();
             foreach ($posts as $post){
                 $followingPosts[] = $post;
-
             }
         }
 
@@ -149,8 +149,39 @@ class PostController extends Controller
         else{
             return response()->json([
                 'errors' => "Post introuvable"
-            ]);
+            ], 404);
         }
+    }
+
+    public function addLike(Request $request){
+
+       $post =  DB::table('posts')->where('id', $request->id)->select('likes')->get();
+
+       $decode = json_decode($post[0]->likes);
+
+        if (in_array($request->user()->id, $decode)){
+            $newValues = array_diff($decode, [1]);
+
+            $check = DB::table('posts')->where('id', $request->id)->update(['likes'=> json_encode($newValues)]);
+
+            if ($check){
+                return response()->json([
+                    'success' => 'unlike effectué'
+                ]);
+            }
+        }
+
+
+
+       array_push($decode, $request->user()->id);
+
+       $check = DB::table('posts')->where('id', $request->id)->update(['likes'=> json_encode($decode)]);
+
+       if ($check){
+           return response()->json([
+               'success' => 'like effectué'
+           ]);
+       }
     }
 
 }

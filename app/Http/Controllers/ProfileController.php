@@ -7,14 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use function PHPUnit\Framework\isEmpty;
 
-/**
- * @OA\Info(title="My First API", version="0.1")
- * @OA\Post(
- *     path="/api/auth/register",
- *     description="Register page",
- *     @OA\Response(response="201", description="Welcome page")
- * )
- */
+
 
 class ProfileController extends Controller
 {
@@ -79,6 +72,43 @@ class ProfileController extends Controller
 
         return $user;
 
+    }
+
+    public function addRmFollow(Request $request){
+
+        $user =  DB::table('users')->where('id', $request->id)->select('followers')->get();
+
+        if ($user[0]->followers == null){
+            $user[0]->followers = json_encode([]);
+        }
+
+        $decode = json_decode($user[0]->followers);
+
+        //UNFOLLOW
+
+        if (in_array($request->user()->id, $decode)){
+            $newValues = array_diff($decode, [1]);
+
+            $check = DB::table('users')->where('id', $request->id)->update(['followers'=> json_encode($newValues)]);
+
+            if ($check){
+                return response()->json([
+                    'success' => 'unfollow effectué'
+                ]);
+            }
+        }
+
+        // FOLLOW
+
+        array_push($decode, $request->user()->id);
+
+        $check = DB::table('users')->where('id', $request->id)->update(['followers'=> json_encode($decode)]);
+
+        if ($check){
+            return response()->json([
+                'success' => 'follow effectué'
+            ]);
+        }
     }
 
 }

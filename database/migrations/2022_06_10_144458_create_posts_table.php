@@ -18,10 +18,9 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('medias')->nullable();
             $table->integer('session_id')->nullable();
-            $table->string('likes')->nullable();
+            $table->json('likes')->nullable();
             $table->integer('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->string('isPremium')->default(0);
+            $table->boolean('isPremium')->default(false);
             $table->timestamps();
         });
     }
