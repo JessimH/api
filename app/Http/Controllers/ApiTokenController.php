@@ -31,13 +31,12 @@ class ApiTokenController extends Controller
 
         if ($request->file('image')){
 
-        return $request->file('image');
         $imageURL = cloudinary()->upload($request->file('image')->getRealPath())->getSecurePath();
 
-    }
-    else{
-        $imageURL = null;
-    }
+        }
+        else{
+            $imageURL = null;
+        }
 
         $user = User::create([
             'email' => $request->email,
