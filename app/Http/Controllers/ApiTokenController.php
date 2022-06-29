@@ -29,24 +29,15 @@ class ApiTokenController extends Controller
             return response()->json(['errors' => "Email ou Username déja utilisé"], 409);
         }
 
-        if ($request->image){
-            $imageURL = cloudinary()->upload($request->image->getRealPath())->getSecurePath();
-        }
+        if ($request->file('image')){
 
-        else{
-            $imageURL = null;
-        }
+        return $request->file('image');
+        $imageURL = cloudinary()->upload($request->file('image')->getRealPath())->getSecurePath();
 
-
-//        if ($request->file('image')){
-//
-//            return $request->file('image');
-//            $imageURL = cloudinary()->upload($request->file('image')->getRealPath())->getSecurePath();
-//
-//        }
-//        else{
-//            $imageURL = null;
-//        }
+    }
+    else{
+        $imageURL = null;
+    }
 
         $user = User::create([
             'email' => $request->email,
