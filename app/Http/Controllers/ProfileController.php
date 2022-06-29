@@ -24,6 +24,15 @@ class ProfileController extends Controller
         $posts = DB::table('posts')->where('user_id', $id)->get();
         $sessions = DB::table('sessions')->where('creator_id', $id)->get();
 
+        $array = json_decode($user[0]->sports);
+        $count = count($array);
+
+
+        for ($i = 0; $i < $count; $i++){
+          $sport =  DB::table('sports')->where('id', $array[$i])->get();
+          $profileContent['sports'] = $sport;
+        }
+
         $profileContent['posts'] = $posts;
         $profileContent['user'] = $user;
         $profileContent['sessions'] = $sessions;

@@ -30,15 +30,20 @@ class ApiTokenController extends Controller
             return response()->json(['errors' => "Email ou Username déja utilisé"], 409);
         }
 
-        $picture = Cloudinary::upload('data:image/png;base64,'.$request->picture);
 
+       $picture = cloudinary()->uploadApi()->upload("data:image/png;base64,".  $request->picture);
+
+
+        if ($picture){
+             return $picture->url;
+        }
         $user = User::create([
             'email' => $request->email,
             'username' => $request->username,
             'password' => Hash::make($request->password),
             'sports' => json_encode($request->sports),
             'is_pro' => $request->is_pro,
-            'profile_picture' => $picture->getPublicId(),
+            'profile_picture' => $picture->getSecurePath(),
         ]);
 
 
@@ -51,7 +56,8 @@ class ApiTokenController extends Controller
             'token' => $token,
             'username' => $user->username,
             'email' => $user->email,
-            'created_at' => $user->created_at
+            'created_at' => $user->created_at,
+            'profile_picture'=> $user->profile_picture
         ], 201);
 
 
