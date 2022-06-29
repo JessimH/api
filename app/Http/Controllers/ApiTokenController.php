@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -29,14 +30,7 @@ class ApiTokenController extends Controller
             return response()->json(['errors' => "Email ou Username déja utilisé"], 409);
         }
 
-        if ($request->file('image')){
-
-        $imageURL = cloudinary()->upload($request->file('image')->getRealPath())->getSecurePath();
-
-        }
-        else{
-            $imageURL = null;
-        }
+        $picture = Cloudinary::upload('data:image/png;base64,'.$request->picture);
 
         $user = User::create([
             'email' => $request->email,
@@ -44,7 +38,7 @@ class ApiTokenController extends Controller
             'password' => Hash::make($request->password),
             'sports' => json_encode($request->sports),
             'is_pro' => $request->is_pro,
-            'profile_picture' => $imageURL
+            'profile_picture' => $picture->getPublicId(),
         ]);
 
 
