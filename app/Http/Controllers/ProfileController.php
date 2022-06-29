@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -43,23 +44,29 @@ class ProfileController extends Controller
         }
 
 
+        $checkUsername = User::where('username', $request->usename)->exists();
+        $checkEmail = User::where('email', $request->email)->exists();
+
+        if($checkEmail || $checkUsername){
+            return response()->json(['errors' => "Email ou Username déja utilisé"], 409);
+        }
+
 
         $updateValues = [
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'sports' => json_encode($request->sports),
-            // Profile picture
         ];
 
-//        if($request->image){
-//
-//            $result = $request->image->storeOnCloudinary();
-//
-//            $updateValues += [
-//                'image' => $result->getSecurePath()
-//            ];
-//        }
+        if($request->image){
+
+            $response = cloudinary()->upload($request->file('image')->getRealPath())->getSecurePath();
+
+            $updateValues += [
+                'profile_picture' => $response
+            ];
+        }
 
 
 
@@ -87,7 +94,7 @@ class ProfileController extends Controller
         //UNFOLLOW
 
         if (in_array($request->user()->id, $decode)){
-            $newValues = array_diff($decode, [1]);
+            $newValues = array_diff($decode, [$request->user()->id]);
 
             $check = DB::table('users')->where('id', $request->id)->update(['followers'=> json_encode($newValues)]);
 
@@ -96,6 +103,7 @@ class ProfileController extends Controller
                     'success' => 'unfollow effectué'
                 ]);
             }
+
         }
 
         // FOLLOW
@@ -105,9 +113,24 @@ class ProfileController extends Controller
         $check = DB::table('users')->where('id', $request->id)->update(['followers'=> json_encode($decode)]);
 
         if ($check){
-            return response()->json([
-                'success' => 'follow effectué'
-            ]);
+            $user = DB::table('users')->where('id', $request->user()->id )->select('following')->get();
+            if ($user[0]->following == null){
+                $user[0]->following = json_encode([]);
+            }
+
+            $following = json_decode($user[0]->following);
+
+            array_push($following, $request->id);
+
+
+
+            $checkFollow = DB::table('users')->where('id', $request->user()->id)->update(['following'=> json_encode($following)]);
+
+            if ($checkFollow){
+                return response()->json([
+                    'success' => 'follow effectué'
+                ]);
+            }
         }
     }
 

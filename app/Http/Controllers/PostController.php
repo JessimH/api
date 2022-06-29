@@ -94,15 +94,6 @@ class PostController extends Controller
             'description' => $request->description,
         ];
 
-//        if($request->image){
-//
-//            $result = $request->image->storeOnCloudinary();
-//
-//            $updateValues += [
-//                'image' => $result->getSecurePath()
-//            ];
-//        }
-
         if ($request->isPremium)
             $updateValues += ['isPremium' => true];
         else

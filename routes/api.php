@@ -31,13 +31,13 @@ Route::middleware('auth:sanctum')->delete('post/{id}', [PostController::class, '
 
 Route::middleware('auth:sanctum')->get('profile/{id}', [ProfileController::class, 'showProfileContent']);
 
-Route::middleware('auth:sanctum')->put('updateprofile/{id}', [ProfileController::class, 'updateUser']);
+Route::middleware('auth:sanctum')->post('updateprofile/{id}', [ProfileController::class, 'updateUser']);
 
 // EXPLORER
 
 Route::middleware('auth:sanctum')->get('explorer', [ExplorerController::class, 'showExplorerContent']);
 
-// Route explorer POST
+Route::middleware('auth:sanctum')->post('userexplorer', [ExplorerController::class, 'showExplorerSearch']);
 
 // MAP
 

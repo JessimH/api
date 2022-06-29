@@ -20,8 +20,12 @@ class ExplorerController extends Controller
     }
 
 
-    public function showExplorerSearch(){
+    public function showExplorerSearch(Request $request){
 
-        // faire la recherche
+       $users = DB::table('users')->where('username', 'like', '%' .$request->search . '%')->get();
+
+       return $users;
+
+
     }
 }
