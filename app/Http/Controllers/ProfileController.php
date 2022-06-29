@@ -16,7 +16,7 @@ class ProfileController extends Controller
     {
         $user = DB::table('users')->where('id', $id)->get();
 
-        if (isEmpty($user)){
+        if (empty($user)){
             return response()->json([
                 'errors' => "user introuvable"
             ], 404);
