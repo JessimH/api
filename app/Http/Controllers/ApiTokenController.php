@@ -31,12 +31,10 @@ class ApiTokenController extends Controller
         }
 
 
-       $picture = cloudinary()->uploadApi()->upload("data:image/png;base64,".  $request->picture);
+       $picture = cloudinary()->upload("data:image/png;base64,".  $request->picture);
 
 
-        if ($picture){
-             return $picture->url;
-        }
+
         $user = User::create([
             'email' => $request->email,
             'username' => $request->username,
