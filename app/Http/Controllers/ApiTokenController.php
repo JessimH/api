@@ -30,9 +30,9 @@ class ApiTokenController extends Controller
             return response()->json(['errors' => "Email ou Username déja utilisé"], 409);
         }
 
-        if ($request->picture != null){
-            $picture = cloudinary()->upload("data:image/png;base64,".  $request->picture)->getSecurePath();
-        }
+//        if ($request->picture != null){
+//            $picture = cloudinary()->upload("data:image/png;base64,".  $request->picture)->getSecurePath();
+//        }
 
 
 
@@ -43,7 +43,6 @@ class ApiTokenController extends Controller
             'password' => Hash::make($request->password),
             'sports' => json_encode($request->sports),
             'is_pro' => $request->is_pro,
-            'profile_picture' => $picture,
         ]);
 
 
