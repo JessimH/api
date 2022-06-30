@@ -18,10 +18,13 @@ class PostController extends Controller
             return response()->json(['errors' => "Le post doit au moins contenir soit une scéance, une description ou une photo/video"]);
         }
 
-        //Création de la tache avec le body + id de l'user
+//        if ($request->medias != null){
+//            $picture = cloudinary()->upload("data:image/png;base64,".  $request->medias)->getSecurePath();
+//        }
+
         $post = Post::create([
             'session_id' => $request->session_id,
-            'medias' => $request->medias,
+            //'medias' => $picture,
             'description' =>$request->description,
             'user_id' => $request->user()->id,
         ]);
@@ -60,18 +63,23 @@ class PostController extends Controller
 
         $user = DB::table('users')->select('following')->where('id', request()->user()->id )->get();
 
-        foreach (json_decode($user[0]->following)->list as $followingID){
-            $posts= DB::table('posts')->where('user_id', $followingID)->get();
-            foreach ($posts as $post){
-                $followingPosts[] = $post;
+        if (json_decode($user[0]->following)){
+            foreach (json_decode($user[0]->following) as $followingID){
+                $posts= DB::table('posts')->where('user_id', $followingID)->get();
+                foreach ($posts as $post){
+                    $user = DB::table('users')->where('id', $post->user_id)->get();
+                    $post->user = $user;
+                    $followingPosts[] = $post;
+
+                }
             }
         }
 
-        if(is_null($post)){
-            return response()->json([
-                'errors' => "Aucun de vos abonnement n'a de post."
-            ], 404);
-        }
+
+        $post = DB::table('posts')->where('user_id', $request->user()->id)->get();
+
+        $followingPosts[] = $post;
+
 
         return $followingPosts;
     }

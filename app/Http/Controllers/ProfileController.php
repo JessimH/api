@@ -38,7 +38,7 @@ class ProfileController extends Controller
         $profileContent['sessions'] = $sessions;
 
 
-        return $profileContent;
+        return $profileContent['user'][0]->note;
     }
 
     public function updateUser(Request $request, $id)
@@ -141,6 +141,12 @@ class ProfileController extends Controller
                 ]);
             }
         }
+    }
+
+    public function getCreatorInfo(Request $request, $id){
+
+
+
     }
 
 }
